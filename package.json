@@ -1,0 +1,20 @@
+{
+  "name": "verou-4-brilliant-ideas-nickmarinade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becodeorg/verou-4-brilliant-ideas-NickMarinade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/becodeorg/verou-4-brilliant-ideas-NickMarinade/issues"
+  },
+  "homepage": "https://github.com/becodeorg/verou-4-brilliant-ideas-NickMarinade#readme"
+}
