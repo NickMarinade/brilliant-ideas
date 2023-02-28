@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const mariadb = require('mariadb');
 
+
 dotenv.config();
 
 
@@ -24,6 +25,22 @@ app.get("/test", async (req, res) => {
     try {
         connection = await pool.getConnection();
         const data = await connection.query(`SELECT * FROM brilliant_minds.ideas`);
+        const jsonS = JSON.stringify(data); 
+        res.writeHead(200, {'Content-Type': 'text/html'}); 
+        res.end(jsonS);
+    } catch (err) {
+        throw err;
+    } finally {
+        if(connection) connection.end();
+    }
+});
+
+app.get("/:id", async (req, res) => {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        let ideaId = req.params.id;
+        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas WHERE id=` + ideaId);
         const jsonS = JSON.stringify(data); 
         res.writeHead(200, {'Content-Type': 'text/html'}); 
         res.end(jsonS);
