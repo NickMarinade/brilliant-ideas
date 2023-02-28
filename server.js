@@ -69,39 +69,36 @@ app.post("/add", async (req, res) => {
     } finally {
         if(connection) connection.end();
     }
-})
+});
+
+app.put("/:id", async (req, res) => {
+    let connection;
+    try {
+      connection = await pool.getConnection();
+      const ideaId = req.params.id;
+      const newTitle = req.body.title;
+      const newDescription = req.body.description;
+      if (!newTitle || !newDescription) {
+        throw new Error("title and description are required");
+      }
+      const data = await connection.query(
+        "UPDATE brilliant_minds.ideas SET title = ?, description = ? WHERE id = ?",
+        [newTitle, newDescription, ideaId]
+      );
+      res.status(200).send("Idea updated successfully");
+    } catch (err) {
+      throw err;
+    } finally {
+      if (connection) connection.end();
+    }
+  });
+  
+  
+  
+  
 
 
 app.listen(3000, () => {
     console.log("Server started on http://127.0.0.1:3000");
 });
 
-
-// const insertIdea = async (title, description) => {
-//     let connection; 
-//      try {
-//        connection = await pool.getConnection();
-//        const query = `INSERT INTO Ideas (Title, Description, Created_at) VALUES (?, ?, NOW())`; 
-//        const data = [title, description]; 
-//        const result = await connection.query(query, data); 
-//        console.log(result)
-//        return result; 
-//      } catch (err) {
-//        throw err; 
-//      } finally {
-//        if (connection) connection.end(); 
-//    };
-//    }
-   
-//    app.post("/new-idea", async (req, res) => {
-//      const { Title, Description } = req.body; 
-//      try {
-//        const result = await insertIdea(Title, Description);
-//        res.redirect("http://localhost:5500/client"); //<--- should redirect???
-//      } catch (err) {
-//        console.error(err);
-//        res
-//          .status(500)
-//          .send("Erreur lors de l'insertion de l'idée dans la base de données"); 
-//      }
-//    });
