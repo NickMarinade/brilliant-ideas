@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const mariadb = require('mariadb');
+// const server = require('./server');
 
 
 dotenv.config();
@@ -40,7 +41,7 @@ app.get("/:id", async (req, res) => {
     try {
         connection = await pool.getConnection();
         let ideaId = req.params.id;
-        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas WHERE id=` + ideaId);
+        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas WHERE id=${ideaId}`);
         const jsonS = JSON.stringify(data); 
         res.writeHead(200, {'Content-Type': 'text/html'}); 
         res.end(jsonS);
@@ -92,11 +93,24 @@ app.put("/:id", async (req, res) => {
       if (connection) connection.end();
     }
   });
-  
-  
-  
-  
 
+  app.delete("/:id", async (req, res) => {
+    let connection;
+    try {
+      connection = await pool.getConnection();
+      let ideaId = req.params.id;
+      const data = await connection.query(`DELETE FROM brilliant_minds.ideas WHERE id=${ideaId}`);
+      res.json({ message: "Idea deleted successfully." });
+    } catch (err) {
+      throw err;
+    } finally {
+      if (connection) connection.end();
+    }
+  });
+  
+//   app.use('/', express.static(path.join(__dirname, 'client')));
+//   app.use('/api', server);
+  
 
 app.listen(3000, () => {
     console.log("Server started on http://127.0.0.1:3000");
