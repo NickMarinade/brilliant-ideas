@@ -11,8 +11,7 @@ let getIdeas = async() => {
         })
         
     const data = await response.json();
-
-    list.innerHTML = '';
+    // list.innerHTML = '';
 
     for (let i = 0; i < data.length; i++) {
       const row = document.createElement("tr");
@@ -55,13 +54,26 @@ let postIdea = async(title, description) => {
   list.appendChild(row);
 };
 
+
+function showAlert(message, className) {
+  const div = document.createElement('div');
+  div.className = `alert alert-${className}`;
+  div.appendChild(document.createTextNode(message));
+  const container = document.querySelector('.container');
+  const form = document.querySelector('#idea-form');
+  container.insertBefore(div, form);
+  setTimeout(() => div.remove(), 3000);
+}
+
+
 let deleteIdea = async(id) => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: 'DELETE'
   });
   const data = await response.json();
-  return data;
+  showAlert(data.message, 'success');
 };
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -74,8 +86,10 @@ ideaInput.addEventListener("submit", (event) => {
   const description = document.querySelector("#description").value;
   postIdea(title, description);
   ideaInput.reset();
-  getIdeas();
+  window.location.reload();
+  // getIdeas();
 });
+
 
 list.addEventListener("click", async (event) => {
   if (event.target.classList.contains("delete")) {
