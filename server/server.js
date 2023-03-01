@@ -13,6 +13,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use (express.urlencoded({extended:true}))
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
