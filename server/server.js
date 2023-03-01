@@ -22,7 +22,7 @@ const pool = mariadb.createPool({
     connectionLimit: 5
 });
 
-app.get("/test", async (req, res) => {
+app.get("/", async (req, res) => {
     let connection;
     try {
         connection = await pool.getConnection();
@@ -53,7 +53,7 @@ app.get("/:id", async (req, res) => {
     }
 });
 
-app.post("/add", async (req, res) => {
+app.post("/", async (req, res) => {
     let connection;
     try {
         connection = await pool.getConnection();
@@ -65,7 +65,7 @@ app.post("/add", async (req, res) => {
             `INSERT INTO brilliant_minds.ideas (title, description) VALUES (?, ?)`,
             [title, description]
         );
-        res.status(200).send("Idea added successfully");
+        res.status(200);
     } catch (err) {
         throw err;
     } finally {
