@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const controllers = require('./controllers');
 
-router.get('/', getIdeas);
-router.post('/add', postIdea);
-router.put('/:id', updateIdea);
-router.delete('/:id', deleteIdea);
+
+router.get("/", controllers.getIdeas);
+router.post('/', controllers.postIdea);
+router.put('/:id', controllers.updateIdea);
+router.delete('/:id', controllers.deleteIdea);
 
 module.exports = router;
