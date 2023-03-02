@@ -80,7 +80,7 @@ const controllers = {
         "UPDATE brilliant_minds.ideas SET title = ?, description = ? WHERE id = ?",
         [newTitle, newDescription, ideaId]
       );
-      res.status(200).send("Idea updated successfully");
+      res.status(200);
     } catch (err) {
       throw err;
     } finally {

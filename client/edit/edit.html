@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Brilliant Ideas</title>
+    <script src="https://kit.fontawesome.com/7479bc5402.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
+    <script src="./edit.js" defer></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="display-4 text-center">
+            <span class="text-warning">Brilliant&#128161;</span>Ideas</h1>
+        <form id="edit-form">
+            <div class="form-group">
+                <label for="title">New Title</label>
+                <input type="text" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="author">New Description</label>
+                <input type="text" id="description" class="form-control">
+            </div>
+            <input type="submit" value="Edit Idea" id="addIdea" class="btn btn-warning btn-block" onclick="redirect(), showAlert();" >
+        </form>
+    </div>
+</body>
+</html>

@@ -11,7 +11,6 @@ let getIdeas = async() => {
         })
         
     const data = await response.json();
-    // list.innerHTML = '';
 
     for (let i = 0; i < data.length; i++) {
       const row = document.createElement("tr");
@@ -20,13 +19,15 @@ let getIdeas = async() => {
         <td>${data[i].title}</td>
         <td>${data[i].description}</td>
         <td>${formattedData}</td>
-        <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+        <td><a class="btn btn-warning btn-sm edit">Edit</a></td>
+        <td><a class="btn btn-danger btn-sm delete">X</a></td>
       `;
       row.setAttribute('data-id', data[i].id);
       list.appendChild(row);
     }
     
 };
+
 
 let postIdea = async(title, description) => {
   const response = await fetch(baseUrl,
@@ -49,20 +50,21 @@ let postIdea = async(title, description) => {
     <td>${data.title}</td>
     <td>${data.description}</td>
     <td>${formattedData}</td>
-    <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+    <td><a class="btn btn-warning btn-sm edit">Edit</a></td>
+    <td><a class="btn btn-danger btn-sm delete">X</a></td>
   `;  
   list.appendChild(row);
 };
 
 
-function showAlert(message, className) {
+ function showAlert(message, className) {
   const div = document.createElement('div');
   div.className = `alert alert-${className}`;
   div.appendChild(document.createTextNode(message));
   const container = document.querySelector('.container');
   const form = document.querySelector('#idea-form');
   container.insertBefore(div, form);
-  setTimeout(() => div.remove(), 3000);
+  setTimeout(() => div.remove(), 2500);
 }
 
 
@@ -80,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getIdeas();
 });
 
+
 ideaInput.addEventListener("submit", (event) => {
   event.preventDefault();
   const title = document.querySelector("#title").value;
@@ -87,7 +90,6 @@ ideaInput.addEventListener("submit", (event) => {
   postIdea(title, description);
   ideaInput.reset();
   window.location.reload();
-  // getIdeas();
 });
 
 
@@ -98,9 +100,17 @@ list.addEventListener("click", async (event) => {
     await deleteIdea(id);
     row.remove();
   }
+
+  if (event.target.classList.contains("edit")) {
+    const row = event.target.parentNode.parentNode;
+    const id = row.dataset.id;
+    const titleField = row.querySelector("td:nth-child(1)");
+    const descriptionField = row.querySelector("td:nth-child(2)");
+    const title = titleField.textContent;
+    const description = descriptionField.textContent;
+    window.location.href = `edit/edit.html?id=${id}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
+  }
 });
-
-
 
 
 
