@@ -35,7 +35,7 @@ const controllers = {
     try {
         connection = await pool.getConnection();
         let ideaId = req.params.id;
-        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas WHERE id=${ideaId}`);
+        const data = await connection.query(`SELECT * FROM brilliant_minds.ideas WHERE id=?`, [ideaId]);
         const jsonS = JSON.stringify(data); 
         res.writeHead(200, {'Content-Type': 'text/html'}); 
         res.end(jsonS);
@@ -76,7 +76,7 @@ const controllers = {
       if (!newTitle || !newDescription) {
         throw new Error("title and description are required");
       }
-      const data = await connection.query(
+      await connection.query(
         "UPDATE brilliant_minds.ideas SET title = ?, description = ? WHERE id = ?",
         [newTitle, newDescription, ideaId]
       );
@@ -93,7 +93,7 @@ const controllers = {
     try {
       connection = await pool.getConnection();
       let ideaId = req.params.id;
-      const data = await connection.query(`DELETE FROM brilliant_minds.ideas WHERE id=${ideaId}`);
+      await connection.query(`DELETE FROM brilliant_minds.ideas WHERE id = ?`, [ideaId]);
       res.json({ message: "Idea deleted successfully." });
     } catch (err) {
       throw err;
