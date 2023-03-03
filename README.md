@@ -5,9 +5,9 @@ Project Structure
 │   │   index.html
 │   │   index.js
 │   │   style.js
-|   └───edit
-|       |  edit.html
-|       |  edit.js
+│   └───edit
+│       │  edit.html
+│       │  edit.js
 │      
 └───server
     │   controllers.js
